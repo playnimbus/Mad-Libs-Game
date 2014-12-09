@@ -58,6 +58,7 @@ public class ConnectToHostInit : MonoBehaviour {
 
     public void sendInputToParse()
     {
-        Debug.Log("Sent to parse");
+        Debug.Log(inputText.text + " Sent to parse");
+        inputText.text = "";
     }
 }
