@@ -10,4 +10,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HostGame.unity
   - enabled: 1
+    path: Assets/Scenes/ConnectToGame.unity
+  - enabled: 1
     path: Assets/Scenes/Storys/GrandmasCloset.unity

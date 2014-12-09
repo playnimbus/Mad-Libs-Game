@@ -52,9 +52,12 @@ public class ConnectToHostInit : MonoBehaviour {
     void setupTextFields()
     {
         headerText.text = currentParseObject.Get<string>("BlankHint") + " " + currentParseObject.Get<int>("BlankLocation") + " In: " + timer.ToString() + " seconds.";
-
-
         inputTextOBJ.SetActive(true);
         inputText.text = currentParseObject.Get<string>("BlankHint");
+    }
+
+    public void sendInputToParse()
+    {
+        Debug.Log("Sent to parse");
     }
 }

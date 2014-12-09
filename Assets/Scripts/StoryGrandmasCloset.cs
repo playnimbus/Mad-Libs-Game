@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StoryGrandmasCloset : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class StoryGrandmasCloset : MonoBehaviour {
      * */
 
     const string StoryName = "Grandmas Closet";
+    StoryObject grandMasCloset;
 
     // Use this for initialization
 	void Start () {
@@ -55,7 +57,7 @@ public class StoryGrandmasCloset : MonoBehaviour {
 
 
 
-        StoryObject grandMasCloset = new StoryObject(StoryName, story, blanks);
+        grandMasCloset = new StoryObject(StoryName, story, blanks);
         grandMasCloset.SendStoryToParse();
 	}
 	
@@ -63,4 +65,27 @@ public class StoryGrandmasCloset : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void showStory()
+    {
+        GameObject.Find("StoryOutput").GetComponent<Text>().text =  grandMasCloset.StoryChunks[0] + " " +
+                                                                    grandMasCloset.Blanks[0] + " " +
+                                                                    grandMasCloset.StoryChunks[1] + " " +
+                                                                    grandMasCloset.Blanks[1] + " " +
+                                                                    grandMasCloset.StoryChunks[2] + " " +
+                                                                    grandMasCloset.Blanks[2] + " " +
+                                                                    grandMasCloset.Blanks[3] + " " +
+                                                                    grandMasCloset.StoryChunks[3] + " " +
+                                                                    grandMasCloset.Blanks[4] + " " +
+                                                                    grandMasCloset.StoryChunks[4] + " " +
+                                                                    grandMasCloset.Blanks[5] + " " +
+                                                                    grandMasCloset.Blanks[6] + " " +
+                                                                    grandMasCloset.StoryChunks[5] + " " +
+                                                                    grandMasCloset.Blanks[7] + " " +
+                                                                    grandMasCloset.StoryChunks[6] + " " +
+                                                                    grandMasCloset.Blanks[8] + " " +
+                                                                    grandMasCloset.Blanks[9] + " " +
+                                                                    grandMasCloset.StoryChunks[7];
+
+    }
 }
