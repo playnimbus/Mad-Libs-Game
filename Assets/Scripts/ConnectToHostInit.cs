@@ -6,10 +6,16 @@ using Parse;
 public class ConnectToHostInit : MonoBehaviour {
 
     public GameObject inputTextOBJ;
+    public GameObject inputFieldTextOBJ;
+    public GameObject inputTextPlaceHolderOBJ;
+
     public GameObject HeaderTxtObj;
+    public GameObject submitBtn;
     Text inputText;
+    Text inputPlaceHolderText;
+
     Text headerText;
-    float timer = 0;
+    float fetchTimer = 0;
     bool objGrabbed = false;
 
     ParseObject currentParseObject;
@@ -17,8 +23,9 @@ public class ConnectToHostInit : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        inputText = inputTextOBJ.GetComponentInChildren<Text>();
+        inputText = inputFieldTextOBJ.GetComponent<Text>();
         headerText = HeaderTxtObj.GetComponent<Text>();
+        inputPlaceHolderText = inputTextPlaceHolderOBJ.GetComponent<Text>();
 
         getObject();
     }
@@ -26,7 +33,7 @@ public class ConnectToHostInit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        timer += Time.deltaTime;
+        fetchTimer += Time.deltaTime;
 
         if (objGrabbed == true)
         {
@@ -37,28 +44,42 @@ public class ConnectToHostInit : MonoBehaviour {
 
     void getObject()
     {
+        fetchTimer = 0;
         ParseQuery<ParseObject> query = ParseObject.GetQuery("StoryInit");
         query.FirstAsync().ContinueWith(t =>
         {
             currentParseObject = t.Result;
             string test = currentParseObject.Get<string>("BlankHint");
             int num = currentParseObject.Get<int>("BlankLocation");
-            Debug.Log(test + " " + num.ToString() + " " + timer.ToString());
+    //        Debug.Log(test + " " + num.ToString() + " " + fetchTimer.ToString());
 
             objGrabbed = true;
+
+            currentParseObject.DeleteAsync();
         });
     }
 
     void setupTextFields()
     {
-        headerText.text = currentParseObject.Get<string>("BlankHint") + " " + currentParseObject.Get<int>("BlankLocation") + " In: " + timer.ToString() + " seconds.";
+        headerText.text = currentParseObject.Get<string>("BlankHint") + " " + currentParseObject.Get<int>("BlankLocation") + " In: " + fetchTimer.ToString() + " seconds.";
+        submitBtn.SetActive(true);
         inputTextOBJ.SetActive(true);
-        inputText.text = currentParseObject.Get<string>("BlankHint");
+        inputPlaceHolderText.text = currentParseObject.Get<string>("BlankHint");
     }
 
     public void sendInputToParse()
     {
-        Debug.Log(inputText.text + " Sent to parse");
+        ParseObject StoryItem = new ParseObject("StoryItem");
+        StoryItem["StoryName"] = currentParseObject.Get<string>("StoryName");
+        StoryItem["UserResponse"] = inputText.text;
+        StoryItem["BlankLocation"] = currentParseObject.Get<int>("BlankLocation");
+        StoryItem["RoomID"] = currentParseObject.Get<string>("RoomID");
+        StoryItem.SaveAsync();
+
         inputText.text = "";
+        submitBtn.SetActive(false);
+        inputTextOBJ.SetActive(false);
+     
+        getObject();
     }
 }

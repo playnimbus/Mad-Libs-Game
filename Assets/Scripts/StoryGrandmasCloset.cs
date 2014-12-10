@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
+using Parse;
 
 public class StoryGrandmasCloset : MonoBehaviour {
 
@@ -26,12 +28,19 @@ public class StoryGrandmasCloset : MonoBehaviour {
       9: <Adjective>
      * */
 
+    public GameObject showStoryBtn;
+
     const string StoryName = "Grandmas Closet";
     StoryObject grandMasCloset;
+    List<string> userResponses;
+
+    bool storyFound = false;
 
     // Use this for initialization
 	void Start () {
-  
+
+        userResponses = new List<string>();
+
         string[] blanks = {
                        /*0*/"First Name",
                        /*1*/"Noun",
@@ -63,29 +72,53 @@ public class StoryGrandmasCloset : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+
+        if (storyFound == true)
+        {
+            printStory();
+            storyFound = false;
+        }
 	}
 
     public void showStory()
     {
-        GameObject.Find("StoryOutput").GetComponent<Text>().text =  grandMasCloset.StoryChunks[0] + " " +
-                                                                    grandMasCloset.Blanks[0] + " " +
-                                                                    grandMasCloset.StoryChunks[1] + " " +
-                                                                    grandMasCloset.Blanks[1] + " " +
-                                                                    grandMasCloset.StoryChunks[2] + " " +
-                                                                    grandMasCloset.Blanks[2] + " " +
-                                                                    grandMasCloset.Blanks[3] + " " +
-                                                                    grandMasCloset.StoryChunks[3] + " " +
-                                                                    grandMasCloset.Blanks[4] + " " +
-                                                                    grandMasCloset.StoryChunks[4] + " " +
-                                                                    grandMasCloset.Blanks[5] + " " +
-                                                                    grandMasCloset.Blanks[6] + " " +
-                                                                    grandMasCloset.StoryChunks[5] + " " +
-                                                                    grandMasCloset.Blanks[7] + " " +
-                                                                    grandMasCloset.StoryChunks[6] + " " +
-                                                                    grandMasCloset.Blanks[8] + " " +
-                                                                    grandMasCloset.Blanks[9] + " " +
-                                                                    grandMasCloset.StoryChunks[7];
+        showStoryBtn.SetActive(false);
 
+        ParseQuery<ParseObject> query = ParseObject.GetQuery("StoryItem").OrderBy("BlankLocation");
+        query.FindAsync().ContinueWith(t =>
+        {
+            IEnumerable<ParseObject> results = t.Result;
+
+            foreach (var result in results)
+            {
+                userResponses.Add(result["UserResponse"].ToString());
+                storyFound = true;
+                result.DeleteAsync();
+            }
+
+        });
+    }
+
+    void printStory()
+    {
+        GameObject.Find("StoryOutput").GetComponent<Text>().text = grandMasCloset.StoryChunks[0] + " " +
+                                                                    userResponses[0] + " " +
+                                                                    grandMasCloset.StoryChunks[1] + " " +
+                                                                    userResponses[1] + " " +
+                                                                    grandMasCloset.StoryChunks[2] + " " +
+                                                                    userResponses[2] + " " +
+                                                                    userResponses[3] + " " +
+                                                                    grandMasCloset.StoryChunks[3] + " " +
+                                                                    userResponses[4] + " " +
+                                                                    grandMasCloset.StoryChunks[4] + " " +
+                                                                    userResponses[5] + " " +
+                                                                    userResponses[6] + " " +
+                                                                    grandMasCloset.StoryChunks[5] + " " +
+                                                                    userResponses[7] + " " +
+                                                                    grandMasCloset.StoryChunks[6] + " " +
+                                                                    userResponses[8] + " " +
+                                                                    userResponses[9] + " " +
+                                                                    grandMasCloset.StoryChunks[7];
     }
 }
