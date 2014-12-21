@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/Scenes/ConnectToGame.unity
   - enabled: 1
     path: Assets/Scenes/Storys/GrandmasCloset.unity
+  - enabled: 1
+    path: Assets/Scenes/Painter.unity

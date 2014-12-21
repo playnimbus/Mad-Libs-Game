@@ -11,4 +11,8 @@ public class MainMenuCotroller : MonoBehaviour {
     {
         Application.LoadLevel("ConnectToGame");
     }
+    public void goToPainterScene()
+    {
+        Application.LoadLevel("Painter");
+    }
 }
