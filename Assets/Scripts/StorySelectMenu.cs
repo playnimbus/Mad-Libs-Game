@@ -7,4 +7,9 @@ public class StorySelectMenu : MonoBehaviour {
     {
         Application.LoadLevel("GrandmasCloset");
     }
+
+    public void goToFairyTale()
+    {
+        Application.LoadLevel("FairyTale");
+    }
 }

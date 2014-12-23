@@ -16,7 +16,7 @@ enum Tool {
 }
 private var tool2 : int = 1;
 var AntiAlias : Samples = Samples.Samples4;
-var tool : Tool = Tool.Line;
+var tool : Tool = Tool.Brush;
 var toolimgs : Texture[];
 var colorCircle : Texture2D;
 var lineWidth : float = 1;
@@ -28,7 +28,7 @@ var lineTool : LineTool;
 var brush : BrushTool;
 var eraser : EraserTool;
 var stroke : Stroke;
-var zoom : int = 1;
+var zoom : float = 1;
 var BezierPoints : BezierPoint[];
 function OnGUI () {
 	GUI.skin = gskin;

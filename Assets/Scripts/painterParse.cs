@@ -2,82 +2,93 @@
 using System.Collections;
 using Parse;
 using Parse.Internal;
+using UnityEngine.UI;
 
 public class painterParse : MonoBehaviour {
 
     public Texture2D texture;
 
-    ParseObject asycedObject;
+    public Text name;
+    public Text personalityText1;
+    public Text personalityText2;
+    public Text personalityText3;
 
-    bool asyncDownloadComplete = false;
-    bool sendTexture = false;
+    public GameObject uploadBtn;
 
-    Texture2D downloadedTexture;
+    string personalityToUpload = "";
 
+    ParseObject currentPulledParseObject;
+    bool objGrabbed = false;
+    float fetchTimer = 0;
 
 	// Use this for initialization
 	void Start () {
-
+        getObject();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (sendTexture == true)
-        {
-            gameObject.SendMessage("SetTexture", downloadedTexture);
-            sendTexture = false;
-            Debug.Log("texture sent to painter");
-        }
 
-        if (asyncDownloadComplete == true)
+        //pulling doodleCharacterInit
+        fetchTimer += Time.deltaTime;
+        if (objGrabbed == true)
         {
-            StartCoroutine(wwwRequest(asycedObject));
-            asyncDownloadComplete = false;
-        }
+            //setupTextFields();
+            Debug.Log("Fetch Time: " + fetchTimer);
 
+            name.text = currentPulledParseObject.Get<string>("name");
+            personalityText1.text = currentPulledParseObject.Get<string>("personality1");
+            personalityText2.text = currentPulledParseObject.Get<string>("personality2");
+            personalityText3.text = currentPulledParseObject.Get<string>("personality3");
+
+            objGrabbed = false;
+        }
 	}
+
+    void getObject()
+    {
+        fetchTimer = 0;
+        ParseQuery<ParseObject> query = ParseObject.GetQuery("DoodleStoryInit");
+        query.FirstAsync().ContinueWith(t =>
+        {
+            currentPulledParseObject = t.Result;
+            objGrabbed = true;
+
+            currentPulledParseObject.DeleteAsync();
+        });
+    }
 
     public void uploadTexture()
     {
+        personalityToUpload = getPersonalityChoice();
+        uploadBtn.SetActive(false);
+
         byte[] data = texture.EncodeToPNG();
         ParseFile parseFile = new ParseFile("texture", data);
         parseFile.SaveAsync().ContinueWith( t => {
 
-            ParseObject painterItem = new ParseObject("PainterItem");
-            painterItem["Texture"] = parseFile;
-            painterItem.SaveAsync();
+            ParseObject DoodleCharacterComplete = new ParseObject("DoodleCharacterComplete");
+            DoodleCharacterComplete["texture"] = parseFile;
+            DoodleCharacterComplete["name"] = name.text;
+            DoodleCharacterComplete["personality"] = personalityToUpload;
+            DoodleCharacterComplete.SaveAsync();
         });
     }
 
-    public void downloadTexture()
+    string getPersonalityChoice()
     {
-        ParseQuery<ParseObject> query = ParseObject.GetQuery("PainterItem");
-        query.FirstAsync().ContinueWith(t =>
+        Toggle[] toggles = GameObject.Find("Canvas").GetComponentsInChildren<Toggle>();
+
+        for (int i = 0; i < toggles.Length; i++)
         {
-            Debug.Log("query complete");
-            asycedObject = t.Result;
-            asyncDownloadComplete = true;
-        });
+            if (toggles[i].isOn == true)
+            {
+                return toggles[i].GetComponentInChildren<Text>().text;
+            }
+        }
+        return "null personality";
+
+
     }
-
-    public IEnumerator wwwRequest(ParseObject obj)
-    {
-        Debug.Log("entered www");
-
-        var imageFile = obj.Get<ParseFile>("Texture");
-        Debug.Log("image url: " + imageFile.Name);
-        var imageRequest = new WWW(imageFile.Url.ToString());
-
-
-
-        yield return imageRequest;
-
-        Debug.Log("www complete");
-
-        downloadedTexture = imageRequest.texture;
-        sendTexture = true;
-    }
-
-
 }

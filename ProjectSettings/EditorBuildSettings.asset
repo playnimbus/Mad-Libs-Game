@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Storys/GrandmasCloset.unity
   - enabled: 1
     path: Assets/Scenes/Painter.unity
+  - enabled: 1
+    path: Assets/Scenes/Storys/FairyTale.unity
