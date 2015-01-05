@@ -38,9 +38,9 @@ public class painterParse : MonoBehaviour {
             Debug.Log("Fetch Time: " + fetchTimer);
 
             name.text = currentPulledParseObject.Get<string>("name");
-            personalityText1.text = currentPulledParseObject.Get<string>("personality1");
-            personalityText2.text = currentPulledParseObject.Get<string>("personality2");
-            personalityText3.text = currentPulledParseObject.Get<string>("personality3");
+  //          personalityText1.text = currentPulledParseObject.Get<string>("personality1");
+  //          personalityText2.text = currentPulledParseObject.Get<string>("personality2");
+  //          personalityText3.text = currentPulledParseObject.Get<string>("personality3");
 
             objGrabbed = false;
         }
@@ -49,7 +49,7 @@ public class painterParse : MonoBehaviour {
     void getObject()
     {
         fetchTimer = 0;
-        ParseQuery<ParseObject> query = ParseObject.GetQuery("DoodleStoryInit");
+        ParseQuery<ParseObject> query = ParseObject.GetQuery("ShooterInit");
         query.FirstAsync().ContinueWith(t =>
         {
             currentPulledParseObject = t.Result;
@@ -61,18 +61,18 @@ public class painterParse : MonoBehaviour {
 
     public void uploadTexture()
     {
-        personalityToUpload = getPersonalityChoice();
+  //      personalityToUpload = getPersonalityChoice();
         uploadBtn.SetActive(false);
 
         byte[] data = texture.EncodeToPNG();
         ParseFile parseFile = new ParseFile("texture", data);
         parseFile.SaveAsync().ContinueWith( t => {
 
-            ParseObject DoodleCharacterComplete = new ParseObject("DoodleCharacterComplete");
-            DoodleCharacterComplete["texture"] = parseFile;
-            DoodleCharacterComplete["name"] = name.text;
-            DoodleCharacterComplete["personality"] = personalityToUpload;
-            DoodleCharacterComplete.SaveAsync();
+            ParseObject ShooterCharacterComplete = new ParseObject("ShooterCharacterComplete");
+            ShooterCharacterComplete["texture"] = parseFile;
+            ShooterCharacterComplete["name"] = name.text;
+    //        DoodleCharacterComplete["personality"] = personalityToUpload;
+            ShooterCharacterComplete.SaveAsync();
         });
     }
 

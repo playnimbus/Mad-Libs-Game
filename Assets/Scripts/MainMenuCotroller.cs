@@ -5,11 +5,7 @@ public class MainMenuCotroller : MonoBehaviour {
 
     public void goToHostScene()
     {
-        Application.LoadLevel("HostGame");
-    }
-    public void goToConnectScene()
-    {
-        Application.LoadLevel("ConnectToGame");
+        Application.LoadLevel("Shooter");
     }
     public void goToPainterScene()
     {
