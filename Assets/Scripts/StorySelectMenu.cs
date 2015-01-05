@@ -12,4 +12,8 @@ public class StorySelectMenu : MonoBehaviour {
     {
         Application.LoadLevel("FairyTale");
     }
+    public void goToShooter()
+    {
+        Application.LoadLevel("Shooter");
+    }
 }
