@@ -16,7 +16,7 @@ static function RGBSlider (c : Color,label : String) {
 
 static function RGBCircle (c : Color,label : String,colorCircle : Texture2D) {
 	var r = GUILayoutUtility.GetAspectRect (1);
-	r.height = r.width -= 15;
+	r.height = r.width;
 	var r2 = Rect (r.x + r.width +5,r.y,10,r.height);
 	var hsb = new HSBColor (c);//It is much easier to work with HSB colours in this case
 	

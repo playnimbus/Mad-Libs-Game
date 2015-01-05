@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseTex: {fileID: 2800000, guid: 15c14a400d993e941800059a60a5dcd3, type: 3}
-  AntiAlias: 4
+  AntiAlias: 5
   tool: 2
   toolimgs:
   - {fileID: 2800000, guid: b0954f75432abed4a92b192d8237a827, type: 3}

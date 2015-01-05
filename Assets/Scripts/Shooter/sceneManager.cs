@@ -66,20 +66,21 @@ public class sceneManager : MonoBehaviour {
             {
                 if (ShooterCharacters[i].name == asyncName)
                 {
-
-                    if (ShooterCharacters[i].name == "enemy")
+                    if (ShooterCharacters[i].tag == "Enemy")
                     {
                         GameObject[] spawners = GameObject.FindGameObjectsWithTag("EnemySpawner");
 
                         for (int s = 0; s < spawners.Length; s++)
                         {
-                            spawners[s].GetComponent<enemySpawner>().enemyTexture = downloadedTexture;
+                            if (spawners[s].name == ShooterCharacters[i].name + "Spawner")
+                            {
+                                spawners[s].GetComponent<enemySpawner>().enemyTexture = downloadedTexture;
+                            }
                         }
                     }
                     //          Debug.Log("names match");
                     //ShooterCharacters[i].chosenPersonality = asycedObject.Get<string>("personality");
                     //         Destroy(DoodleCharacters[i].gameObject.GetComponent<SpriteRenderer>());
-
                     Sprite tempSprite = Sprite.Create(downloadedTexture, new Rect(0, 0, downloadedTexture.width, downloadedTexture.height), new Vector2(0.5f, 0.5f));
 
 
@@ -90,7 +91,6 @@ public class sceneManager : MonoBehaviour {
                     {
                         renderers[x].sprite = tempSprite;
                     }
-
                 }
             }
 

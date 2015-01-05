@@ -164,7 +164,7 @@ function Eraser (p1 : Vector2,p2 : Vector2) {
 	if (p2 == Vector3.zero) {
 		p2 = p1;
 	}
-	Drawing.PaintLine (p1,p2,eraser.width,Color.white,eraser.hardness,baseTex);
+	Drawing.PaintLine (p1,p2,eraser.width,Color.clear,eraser.hardness,baseTex);
 	baseTex.Apply ();
 }
 
