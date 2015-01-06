@@ -29,16 +29,17 @@ public class enemySpawner : MonoBehaviour {
                 newEnemy.transform.position = gameObject.transform.position;
                 spawnCounter = 0;
 
-
-                Sprite tempSprite = Sprite.Create(enemyTexture, new Rect(0, 0, enemyTexture.width, enemyTexture.height), new Vector2(0.5f, 0.5f));
-
-
-                //for some reaon, assigning a sprite to a spriteRenderer adds a second spriteRenderer to the gameObject. This is my current solution to the problem.
-                SpriteRenderer[] renderers = newEnemy.GetComponents<SpriteRenderer>();
-
-                for (int x = 0; x < renderers.Length; x++)
+                if (enemyTexture != null)
                 {
-                    renderers[x].sprite = tempSprite;
+                    Sprite tempSprite = Sprite.Create(enemyTexture, new Rect(0, 0, enemyTexture.width, enemyTexture.height), new Vector2(0.5f, 0.5f));
+
+                    //for some reaon, assigning a sprite to a spriteRenderer adds a second spriteRenderer to the gameObject. This is my current solution to the problem.
+                    SpriteRenderer[] renderers = newEnemy.GetComponents<SpriteRenderer>();
+
+                    for (int x = 0; x < renderers.Length; x++)
+                    {
+                        renderers[x].sprite = tempSprite;
+                    }
                 }
 
             }

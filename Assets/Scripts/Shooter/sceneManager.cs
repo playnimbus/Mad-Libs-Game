@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Parse;
 
 public class sceneManager : MonoBehaviour {
 
     public ShooterCharacter[] ShooterCharacters;
+    public GameObject RoomPrefab;
+
 
     //these manage the steps involved with downloading texture from parse
     ParseObject asycedObject;
@@ -14,18 +17,18 @@ public class sceneManager : MonoBehaviour {
 
     public GameObject startScreen;
 
-    public enum GameStates { menu, playing };
-
+    public enum GameStates { menu, playing, switchingRoom };
     public GameStates gameState = GameStates.menu;
 
 	// Use this for initialization
 	void Start () {
-	
+
+        clearOldParseData();
+
         for(int i = 0; i < ShooterCharacters.Length;i++)
         {
             SendCharacterToParse(ShooterCharacters[i]);
         }
-
 	}
 	
 	// Update is called once per frame
@@ -35,10 +38,10 @@ public class sceneManager : MonoBehaviour {
         {
             case GameStates.menu: menuUpdate(); break;
             case GameStates.playing: playingUpdate(); break;
+            case GameStates.switchingRoom: switchingRoomUpdate(); break;
         }
 	
 	}
-
 
     //-------------Menu State------------------------------------
 
@@ -122,8 +125,51 @@ public class sceneManager : MonoBehaviour {
     void playingExit() 
     {
     }
+
+    //-------------switchingRoom State------------------------------------
+
+    GameObject oldRoom = null;
+    GameObject newRoom = null;
+
+    public float transitionLength;
+    float transitionTimer = 0;
+
+    void switchingRoomEnter()
+    {
+        transitionTimer = 0;
+        oldRoom = GameObject.Find("Room");
+
+        newRoom = (GameObject)Instantiate(RoomPrefab);
+        newRoom.transform.position = oldRoom.transform.position + new Vector3(0,20,0);
+        newRoom.name = "Room";
+
+        iTween.MoveTo(Camera.main.gameObject, newRoom.GetComponent<RoomObjectHolder>().CameraLocation.transform.position, transitionLength);
+        
+    }
+    void switchingRoomUpdate()
+    {
+        transitionTimer += Time.deltaTime;
+
+        if (transitionTimer >= transitionLength)
+        {
+            switchState(GameStates.playing);
+        }
+    }
+    void switchingRoomExit()
+    {
+        GameObject.Destroy(oldRoom);
+
+        iTween.MoveBy(newRoom.GetComponent<RoomObjectHolder>().Door, new Vector3(5.5f, 0, 0), 1f);
+
+        oldRoom = null;
+        newRoom = null;
+    }
     //-------------------------------------------------------------
 
+    public void GoToNextRoom()
+    {
+        switchState(GameStates.switchingRoom);
+    }
 
     void switchState(GameStates newState)
     {
@@ -131,6 +177,7 @@ public class sceneManager : MonoBehaviour {
         {
             case GameStates.menu: menuExit(); break;
             case GameStates.playing: playingExit(); break;
+            case GameStates.switchingRoom: switchingRoomExit(); break;
         }
 
         gameState = newState;
@@ -139,6 +186,7 @@ public class sceneManager : MonoBehaviour {
         {
             case GameStates.menu: menuEnter(); break;
             case GameStates.playing: playingEnter(); break;
+            case GameStates.switchingRoom: switchingRoomEnter(); break;
         }
     }
 
@@ -150,6 +198,32 @@ public class sceneManager : MonoBehaviour {
  //       StoryInit["personality2"] = character.personality2;
  //       StoryInit["personality3"] = character.personality3;
         ShooterInit.SaveAsync();
+    }
+
+    void clearOldParseData()
+    {
+        ParseQuery<ParseObject> query = ParseObject.GetQuery("ShooterCharacterComplete");
+        query.FindAsync().ContinueWith(t =>
+        {
+            IEnumerable<ParseObject> results = t.Result;
+
+            foreach (var result in results)
+            {
+                result.DeleteAsync();
+            }
+            
+        });
+
+        ParseQuery<ParseObject> query2 = ParseObject.GetQuery("ShooterInit");
+        query2.FindAsync().ContinueWith(t =>
+        {
+            IEnumerable<ParseObject> results = t.Result;
+
+            foreach (var result in results)
+            {
+                result.DeleteAsync();
+            }
+        });
     }
 
     public void downloadTexture()

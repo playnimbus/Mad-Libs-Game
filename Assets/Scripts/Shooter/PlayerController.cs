@@ -7,17 +7,44 @@ public class PlayerController : MonoBehaviour {
     public float bulletSpeed;
     public GameObject bullet;
 
+    sceneManager scene;
+
 	// Use this for initialization
 	void Start () {
-	
+        scene = GameObject.Find("SceneManager").GetComponent<sceneManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+        switch (scene.gameState)
+        {
+            case sceneManager.GameStates.menu: menuUpdate(); break;
+            case sceneManager.GameStates.playing: playingUpdate(); break;
+            case sceneManager.GameStates.switchingRoom: switchingRoomUpdate(); break;
+        }
+	}
+
+    void menuUpdate()
+    {
+        checkMovementInput();
+    }
+    void playingUpdate()
+    {
+        checkMovementInput();
+        checkShootingInput();
+    }
+    void switchingRoomUpdate()
+    {
+        gameObject.rigidbody2D.AddForce(new Vector2(0, moveSpeed/2));
+        checkShootingInput();
+    }
+
+    void checkMovementInput()
+    {
         if (Input.GetKey(KeyCode.W))
         {
-            gameObject.rigidbody2D.AddForce(new Vector2( 0, moveSpeed));
+            gameObject.rigidbody2D.AddForce(new Vector2(0, moveSpeed));
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -31,8 +58,10 @@ public class PlayerController : MonoBehaviour {
         {
             gameObject.rigidbody2D.AddForce(new Vector2(moveSpeed, 0));
         }
-
-
+        
+    }
+    void checkShootingInput()
+    {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             spawnBullet(new Vector2(0, bulletSpeed));
@@ -49,8 +78,8 @@ public class PlayerController : MonoBehaviour {
         {
             spawnBullet(new Vector2(bulletSpeed, 0));
         }
-
-	}
+        
+    }
 
     void spawnBullet(Vector2 velocity)
     {
