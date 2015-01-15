@@ -31,18 +31,20 @@ public class enemyController : MonoBehaviour {
 
         rigidbody2D.velocity = direction;
 
-        shootTimer++;
-        if (shootTimer >= 100)
+        if (attackType == "Ranged")
         {
-            Shoot();
-            shootTimer = 0;
+            shootTimer++;
+            if (shootTimer >= 100)
+            {
+                Shoot();
+                shootTimer = 0;
+            }
         }
-            
 	}
 
     void defineEnemyTypes()
     {
-        enemyTypes.Add("Touch");
+        enemyTypes.Add("Melee");
         enemyTypes.Add("Ranged");
     }
 
@@ -50,12 +52,12 @@ public class enemyController : MonoBehaviour {
     {
         switch (enemyTypes[enemy])
         {
-            case "Touch":
+            case "Melee":
                 health = 5;
                 speed = 5;
                 defense = 5;
                 damage = 5;
-                attackType = "Touch";
+                attackType = "Melee";
                 break;
 
             case "Ranged":
