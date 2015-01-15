@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     public float bulletSpeed;
     public GameObject bullet;
 
+    public bool isGamepad;
+
     sceneManager scene;
 
 	// Use this for initialization
@@ -42,43 +44,48 @@ public class PlayerController : MonoBehaviour {
 
     void checkMovementInput()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (!isGamepad)
         {
-            gameObject.rigidbody2D.AddForce(new Vector2(0, moveSpeed));
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            gameObject.rigidbody2D.AddForce(new Vector2(0, -moveSpeed));
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            gameObject.rigidbody2D.AddForce(new Vector2(-moveSpeed, 0));
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            gameObject.rigidbody2D.AddForce(new Vector2(moveSpeed, 0));
+            if (Input.GetKey(KeyCode.W))
+            {
+                gameObject.rigidbody2D.AddForce(new Vector2(0, moveSpeed));
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                gameObject.rigidbody2D.AddForce(new Vector2(0, -moveSpeed));
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                gameObject.rigidbody2D.AddForce(new Vector2(-moveSpeed, 0));
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                gameObject.rigidbody2D.AddForce(new Vector2(moveSpeed, 0));
+            }
         }
         
     }
     void checkShootingInput()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (!isGamepad)
         {
-            spawnBullet(new Vector2(0, bulletSpeed));
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                spawnBullet(new Vector2(0, bulletSpeed));
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                spawnBullet(new Vector2(0, -bulletSpeed));
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                spawnBullet(new Vector2(-bulletSpeed, 0));
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                spawnBullet(new Vector2(bulletSpeed, 0));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            spawnBullet(new Vector2(0, -bulletSpeed));
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            spawnBullet(new Vector2(-bulletSpeed, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            spawnBullet(new Vector2(bulletSpeed, 0));
-        }
-        
     }
 
     void spawnBullet(Vector2 velocity)

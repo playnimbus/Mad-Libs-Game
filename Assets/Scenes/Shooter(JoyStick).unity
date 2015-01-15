@@ -1343,10 +1343,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6000000, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
+      propertyPath: m_FixedAngle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
+      propertyPath: isGamepad
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -1844,7 +1852,7 @@ Rigidbody2D:
   m_LinearDrag: 3
   m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_FixedAngle: 0
+  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1856,7 +1864,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1504549531}
   m_GameObject: {fileID: 2118195177}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd459e8da2d74b443927fe72f7d28741, type: 3}
   m_Name: 
@@ -1864,6 +1872,7 @@ MonoBehaviour:
   moveSpeed: 20
   bulletSpeed: 15
   bullet: {fileID: 100000, guid: c0567686b1431674fa619db0b60a6fd3, type: 2}
+  isGamepad: 1
 --- !u!212 &2118195180
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1959,5 +1968,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerWeapon: {fileID: 584748099}
   bulletOrigin: {fileID: 1842693914}
-  bullet: {fileID: 100000, guid: c0567686b1431674fa619db0b60a6fd3, type: 2}
   moveSpeed: 25
