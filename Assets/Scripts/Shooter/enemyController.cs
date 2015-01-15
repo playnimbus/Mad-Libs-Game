@@ -34,7 +34,7 @@ public class enemyController : MonoBehaviour {
         tempTimer++;
         if (tempTimer >= 100)
         {
-            shootTowards(player);
+            Shoot();
             tempTimer = 0;
         }
             
@@ -67,29 +67,23 @@ public class enemyController : MonoBehaviour {
         }
     }
 
-    void shootTowards(GameObject towardsThisObject)
+    void Shoot()
     {
         GameObject newBullet = (GameObject)Instantiate(bullet);
-        Vector3 offset = new Vector3(0, 0, 0);
+
+        newBullet.transform.position = new Vector3(gameObject.transform.position.x + gameObject.GetComponent<PolygonCollider2D>().bounds.size.x, gameObject.transform.position.y + +gameObject.GetComponent<PolygonCollider2D>().bounds.size.y, gameObject.transform.position.z);
         
-        Vector3 directionTowardsObject = towardsThisObject.transform.position - gameObject.transform.position;
+        newBullet.transform.LookAt(player.transform);
+        newBullet.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        
         Vector3 movementDirection = player.transform.position - gameObject.transform.position;
+        newBullet.GetComponent<bulletScript>().setVelocity(movementDirection);
 
-        if (movementDirection.x < 0)
-            offset = new Vector3 (gameObject.GetComponent<PolygonCollider2D>().bounds.size.x * -1, 0f, 0f);
-        else if (movementDirection.x > 0)
-            offset = new Vector3 (gameObject.GetComponent<PolygonCollider2D>().bounds.size.x * 1, 0f, 0f);
+    }
 
-        if (movementDirection.y < 0)
-            offset = new Vector3(0f, gameObject.GetComponent<PolygonCollider2D>().bounds.size.y * -1, 0f);
-        else if (movementDirection.y > 0)
-            offset = new Vector3(0f, gameObject.GetComponent<PolygonCollider2D>().bounds.size.y * 1, 0f);
+    void shootTowards(GameObject towardsThisObject)
+    {
 
-
-        newBullet.transform.position = gameObject.transform.position + offset;
-        newBullet.GetComponent<bulletScript>().setVelocity(directionTowardsObject);
-        
-        GameObject.Destroy(newBullet, 3);
 
     }
 
