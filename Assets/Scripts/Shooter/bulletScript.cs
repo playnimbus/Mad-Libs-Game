@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class bulletScript : MonoBehaviour {
-
+    bool hurtPlayer = false;
 	// Use this for initialization
 	void Start () {
 	}
@@ -17,13 +17,25 @@ public class bulletScript : MonoBehaviour {
         gameObject.rigidbody2D.velocity = velocity;
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public void SetHurtPlayer(bool set)
     {
-        GameObject.Destroy(gameObject);
+        hurtPlayer = set;
+    }
 
-        if (coll.gameObject.tag == "Enemy")
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        
+
+        if (coll.gameObject.tag == "Enemy" && !hurtPlayer)
         {
             coll.gameObject.GetComponent<enemyController>().dealDamage(1);
+            GameObject.Destroy(gameObject);
+        }
+        if (coll.gameObject.tag == "Player" && hurtPlayer)
+        {
+            GameObject.Destroy(gameObject);
         }
     }
+
+    
 }

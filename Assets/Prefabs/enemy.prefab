@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 60: {fileID: 6000000}
   - 50: {fileID: 5000000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Enemy
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.469999999, y: -5.09000015, z: 7.69000006}
+  m_LocalPosition: {x: -2.91000009, y: -3.69000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,6 +92,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece02f477afd326498ee6a1b95799a2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTypes: []
+  health: 5
+  speed: 0
+  defense: 0
+  damage: 0
+  attackType: 
+  bullet: {fileID: 100000, guid: c0567686b1431674fa619db0b60a6fd3, type: 2}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3defe95373e2de34aa01a1a4b29f1b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chosenPersonality: 
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
