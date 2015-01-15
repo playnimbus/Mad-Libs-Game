@@ -24,8 +24,6 @@ public class bulletScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        
-
         if (coll.gameObject.tag == "Enemy" && !hurtPlayer)
         {
             coll.gameObject.GetComponent<enemyController>().dealDamage(1);

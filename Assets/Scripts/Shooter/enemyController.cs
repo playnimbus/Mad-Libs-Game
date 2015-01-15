@@ -15,7 +15,7 @@ public class enemyController : MonoBehaviour {
     GameObject player;
     public GameObject bullet;
 
-    int tempTimer = 0;
+    int shootTimer = 0;
 	// Use this for initialization
 	void Start () {
         
@@ -31,11 +31,11 @@ public class enemyController : MonoBehaviour {
 
         rigidbody2D.velocity = direction;
 
-        tempTimer++;
-        if (tempTimer >= 100)
+        shootTimer++;
+        if (shootTimer >= 100)
         {
             Shoot();
-            tempTimer = 0;
+            shootTimer = 0;
         }
             
 	}
@@ -57,6 +57,7 @@ public class enemyController : MonoBehaviour {
                 damage = 5;
                 attackType = "Touch";
                 break;
+
             case "Ranged":
                 health = 3.5f;
                 speed = 3;
