@@ -7,22 +7,22 @@ public class enemyController : MonoBehaviour {
 
     public List<string> enemyTypes = new List<string>();
     public float health = 5;
-    public float speed;
-    public float defense;
-    public float damage;
-    public string attackType;
+    public float speed = 1;
+    public float defense = 1;
+    public float damage = 1;
+    public string attackType = "Ranged";
 
     GameObject player;
     public GameObject bullet;
 
     int shootTimer = 0;
+    int meleeTimer = 0;
 	// Use this for initialization
 	void Start () {
         
         player = GameObject.FindGameObjectWithTag("Player");
-        defineEnemyTypes();
-        Debug.Log("Enemy Type" + attackType);
-        setEnemy(1);
+        defineEnemyTypes(); //Defines the enemies and their statistics. Look into finding a way to make this to be done outside of this script.
+        setEnemy(1); //Setting Enemies to ranged for now. Need to set this from the data sent from the drawing app. 
 	}
 	
 	// Update is called once per frame
@@ -30,16 +30,25 @@ public class enemyController : MonoBehaviour {
 
         Vector3 direction = player.transform.position - gameObject.transform.position;
 
-        rigidbody2D.velocity = direction;
+        rigidbody2D.velocity = direction * speed;
 
-        if (attackType == "Ranged")
+        switch (attackType)
         {
-            shootTimer++;
-            if (shootTimer >= 100)
-            {
-                Shoot();
-                shootTimer = 0;
-            }
+            case "Ranged":
+                {
+                    shootTimer++;
+                    if (shootTimer >= 100)
+                    {
+                        Shoot();
+                        shootTimer = 0;
+                    }
+                    break;
+                }
+            case "Melee":
+                {
+                    //Nothing yet....
+                    break;
+                }
         }
 	}
 
@@ -55,17 +64,17 @@ public class enemyController : MonoBehaviour {
         {
             case "Melee":
                 health = 5;
-                speed = 5;
-                defense = 5;
-                damage = 5;
+                speed = 1;
+                defense = 1;
+                damage = 1;
                 attackType = "Melee";
                 break;
 
             case "Ranged":
                 health = 3.5f;
-                speed = 3;
-                defense = 1;
-                damage = 5;
+                speed = 0.5f;
+                defense = 1f;
+                damage = 5f;
                 attackType = "Ranged";
                 break;
         }
@@ -79,52 +88,36 @@ public class enemyController : MonoBehaviour {
         Vector3 movementDirection = player.transform.position - gameObject.transform.position;
 
         //up = (0,1) down = (0,-1) left = (-1, 0)  right = (1,0)
-        Debug.Log(Mathf.Abs(movementDirection.x) + " " + Mathf.Abs(movementDirection.y));
-        //Left (-1,0)
-        if ((Mathf.Abs(movementDirection.x) < 0) && (Mathf.Abs(movementDirection.y) == 0))
-        {
-            newBullet.transform.position = new Vector3(gameObject.transform.position.x - gameObject.GetComponent<PolygonCollider2D>().bounds.size.x,
-                gameObject.transform.position.y, 
-                gameObject.transform.position.z);
-            Debug.Log("Left");
-        }
-        //Right (1,0)
-        else if ((Mathf.Abs(movementDirection.x) > 0) && (Mathf.Abs(movementDirection.y) == 0))
-        {
-            newBullet.transform.position = new Vector3(gameObject.transform.position.x + gameObject.GetComponent<PolygonCollider2D>().bounds.size.x,
-                gameObject.transform.position.y,
-                gameObject.transform.position.z);
-            Debug.Log("Right");
-        }
-        //Up
-        else if ((Mathf.Abs(movementDirection.x) == 0) && (Mathf.Abs(movementDirection.y) < 0))
-        {
-            newBullet.transform.position = new Vector3(gameObject.transform.position.x,
-                gameObject.transform.position.y,
-                gameObject.transform.position.z);
-            Debug.Log("Up");
-        }
-        //Down
-        else if ((Mathf.Abs(movementDirection.x) == 0) && (Mathf.Abs(movementDirection.y) < 0))
-        {
-            newBullet.transform.position = new Vector3(gameObject.transform.position.x,
-                gameObject.transform.position.y - gameObject.GetComponent<PolygonCollider2D>().bounds.size.y,
-                gameObject.transform.position.z);
-            Debug.Log("Down");
-        }
         
         newBullet.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
         newBullet.transform.LookAt(player.transform);
         newBullet.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         newBullet.GetComponent<bulletScript>().setVelocity(movementDirection * 5);
-        
-
     }
 
-    void shootTowards(GameObject towardsThisObject)
+    void Melee()
     {
+        meleeTimer++;
+        if (meleeTimer > 100)
+        {
+            player.SendMessage("TakeDamage", 1);
+            meleeTimer = 0;
+        }
+    }
 
-
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            Melee();
+        }
+    }
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            meleeTimer = 0;
+        }
     }
 
     public void dealDamage(int damage)
@@ -135,4 +128,6 @@ public class enemyController : MonoBehaviour {
             GameObject.Destroy(gameObject);
         }
     }
+
+
 }
