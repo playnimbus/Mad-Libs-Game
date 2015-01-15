@@ -22,6 +22,7 @@ public class enemyController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         defineEnemyTypes();
         Debug.Log("Enemy Type" + attackType);
+        setEnemy(1);
 	}
 	
 	// Update is called once per frame
