@@ -63,7 +63,7 @@ public class painterParse : MonoBehaviour {
     {
   //      personalityToUpload = getPersonalityChoice();
         uploadBtn.SetActive(false);
-
+        
         byte[] data = texture.EncodeToPNG();
         ParseFile parseFile = new ParseFile("texture", data);
         parseFile.SaveAsync().ContinueWith( t => {
