@@ -13,13 +13,14 @@ public class enemyController : MonoBehaviour {
     public string attackType;
 
     GameObject player;
+    public GameObject bullet;
 
+    int tempTimer = 0;
 	// Use this for initialization
 	void Start () {
         
         player = GameObject.FindGameObjectWithTag("Player");
         defineEnemyTypes();
-        setEnemy(Random.Range(0,1));
         Debug.Log("Enemy Type" + attackType);
 	}
 	
@@ -29,6 +30,14 @@ public class enemyController : MonoBehaviour {
         Vector3 direction = player.transform.position - gameObject.transform.position;
 
         rigidbody2D.velocity = direction;
+
+        tempTimer++;
+        if (tempTimer >= 100)
+        {
+            shootTowards(player);
+            tempTimer = 0;
+        }
+            
 	}
 
     void defineEnemyTypes()
@@ -56,6 +65,32 @@ public class enemyController : MonoBehaviour {
                 attackType = "Ranged";
                 break;
         }
+    }
+
+    void shootTowards(GameObject towardsThisObject)
+    {
+        GameObject newBullet = (GameObject)Instantiate(bullet);
+        Vector3 offset = new Vector3(0, 0, 0);
+        
+        Vector3 directionTowardsObject = towardsThisObject.transform.position - gameObject.transform.position;
+        Vector3 movementDirection = player.transform.position - gameObject.transform.position;
+
+        if (movementDirection.x < 0)
+            offset = new Vector3 (gameObject.GetComponent<PolygonCollider2D>().bounds.size.x * -1, 0f, 0f);
+        else if (movementDirection.x > 0)
+            offset = new Vector3 (gameObject.GetComponent<PolygonCollider2D>().bounds.size.x * 1, 0f, 0f);
+
+        if (movementDirection.y < 0)
+            offset = new Vector3(0f, gameObject.GetComponent<PolygonCollider2D>().bounds.size.y * -1, 0f);
+        else if (movementDirection.y > 0)
+            offset = new Vector3(0f, gameObject.GetComponent<PolygonCollider2D>().bounds.size.y * 1, 0f);
+
+
+        newBullet.transform.position = gameObject.transform.position + offset;
+        newBullet.GetComponent<bulletScript>().setVelocity(directionTowardsObject);
+        
+        GameObject.Destroy(newBullet, 3);
+
     }
 
     public void dealDamage(int damage)
