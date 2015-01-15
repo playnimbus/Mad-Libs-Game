@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GamepadController : MonoBehaviour {
+    public GameObject bullet;
     public GameObject playerWeapon;
     public GameObject bulletOrigin;
     public float moveSpeed = 25;
@@ -31,8 +32,10 @@ public class GamepadController : MonoBehaviour {
        
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            Vector2 velocity = new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical"));
-            SendMessage("spawnBullet", velocity);
+            GameObject clone;
+            clone = Instantiate(bullet, bulletOrigin.transform.position, bulletOrigin.transform.rotation) as GameObject;
+            clone.rigidbody2D.velocity = bulletOrigin.transform.up * -25;
+            Destroy(clone.gameObject, 2);
         }
     }
 }
