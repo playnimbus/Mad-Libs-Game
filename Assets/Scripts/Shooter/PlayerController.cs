@@ -4,10 +4,19 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed;
+    public float mousetrackingSpeed;
     public float bulletSpeed;
+    public float fireRate;
+
     public GameObject bullet;
+    public GameObject playerWeapon;
+    public GameObject weaponSprite;
+    public GameObject playerCursor;
+    public GameObject bulletOrigin;
 
     public bool isGamepad;
+
+    private float lastShot = 0.0F;
 
     sceneManager scene;
 
@@ -63,27 +72,53 @@ public class PlayerController : MonoBehaviour {
                 gameObject.rigidbody2D.AddForce(new Vector2(moveSpeed, 0));
             }
         }
+        if (isGamepad)
+        {
+            float ySpeed = Input.GetAxis("Vertical") * moveSpeed;
+            float xSpeed = Input.GetAxis("Horizontal") * moveSpeed;
+
+            gameObject.rigidbody2D.AddForce(new Vector2(xSpeed, ySpeed));
+        }
         
     }
     void checkShootingInput()
     {
         if (!isGamepad)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            //aim
+            //Screen.showCursor = false;
+            //playerCursor.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.99F));
+            //playerWeapon.transform.LookAt(playerCursor.transform.position);
+            //shoot
+            if (Input.GetMouseButtonDown(0))
             {
-                spawnBullet(new Vector2(0, bulletSpeed));
+                GameObject clone;
+                clone = Instantiate(bullet, bulletOrigin.transform.position, bulletOrigin.transform.rotation) as GameObject;
+                clone.rigidbody2D.velocity = -bulletOrigin.transform.up * bulletSpeed;
+                Destroy(clone.gameObject, 2);
+                lastShot = Time.time;
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+        }
+
+        if (isGamepad)
+        {
+            Vector2 rsInput = new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical"));
+            float angle = Mathf.Atan2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) * Mathf.Rad2Deg;
+
+            if (rsInput.sqrMagnitude < 0.15f)
             {
-                spawnBullet(new Vector2(0, -bulletSpeed));
+                return;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+
+            playerWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            if (rsInput.sqrMagnitude > 0.15f && Time.time > fireRate + lastShot)
             {
-                spawnBullet(new Vector2(-bulletSpeed, 0));
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                spawnBullet(new Vector2(bulletSpeed, 0));
+                GameObject clone;
+                clone = Instantiate(bullet, bulletOrigin.transform.position, bulletOrigin.transform.rotation) as GameObject;
+                clone.rigidbody2D.velocity = -bulletOrigin.transform.up * bulletSpeed;
+                Destroy(clone.gameObject, 2);
+                lastShot = Time.time;
             }
         }
     }
