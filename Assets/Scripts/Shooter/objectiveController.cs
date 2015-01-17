@@ -17,4 +17,5 @@ public class objectiveController : MonoBehaviour {
     {
         currentObjective = objective;
     }
+
 }
