@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         scene = GameObject.Find("SceneManager").GetComponent<sceneManager>();
+        checkInputType();
 	}
 	
 	// Update is called once per frame
@@ -49,6 +50,20 @@ public class PlayerController : MonoBehaviour {
     {
         gameObject.rigidbody2D.AddForce(new Vector2(0, moveSpeed/2));
         checkShootingInput();
+    }
+
+    void checkInputType()
+    {
+        if (isGamepad)
+        {
+            //keyboard and mouse selected
+            playerCursor.SetActive(false);
+        }
+        else if (!isGamepad)
+        {
+            //Gamepad selected
+            playerCursor.SetActive(true);
+        }
     }
 
     void checkMovementInput()
@@ -85,10 +100,15 @@ public class PlayerController : MonoBehaviour {
     {
         if (!isGamepad)
         {
+            //cursor gameObject movement
+            Screen.showCursor = false;
+            playerCursor.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.99F));
+
             //aim
-            //Screen.showCursor = false;
-            //playerCursor.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.99F));
-            //playerWeapon.transform.LookAt(playerCursor.transform.position);
+            Vector3 dir = playerCursor.transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            playerWeapon.transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+
             //shoot
             if (Input.GetMouseButtonDown(0))
             {
@@ -102,16 +122,18 @@ public class PlayerController : MonoBehaviour {
 
         if (isGamepad)
         {
+            //aim
             Vector2 rsInput = new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical"));
             float angle = Mathf.Atan2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) * Mathf.Rad2Deg;
-
+            //deadzone detection
             if (rsInput.sqrMagnitude < 0.15f)
             {
                 return;
             }
-
             playerWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
 
+            //shoot
+            //** Figuring out how to 3rd Axis on 360 Controller but for now when not deadzoning timed shots instantiate
             if (rsInput.sqrMagnitude > 0.15f && Time.time > fireRate + lastShot)
             {
                 GameObject clone;
