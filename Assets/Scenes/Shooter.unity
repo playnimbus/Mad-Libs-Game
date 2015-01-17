@@ -1406,6 +1406,10 @@ Prefab:
       propertyPath: playerCursor
       value: 
       objectReference: {fileID: 1640818007}
+    - target: {fileID: 11430308, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
+      propertyPath: isGamepad
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0fecf710b9d85b84f9ed555f3302fd24, type: 2}
   m_RootGameObject: {fileID: 2118195177}

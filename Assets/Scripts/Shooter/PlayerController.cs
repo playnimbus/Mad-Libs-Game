@@ -105,8 +105,8 @@ public class PlayerController : MonoBehaviour {
             playerCursor.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.99F));
 
             //aim
-            Vector3 dir = playerCursor.transform.position - transform.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Vector3 rot = playerCursor.transform.position - transform.position;
+            float angle = Mathf.Atan2(rot.y, rot.x) * Mathf.Rad2Deg;
             playerWeapon.transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 
             //shoot
