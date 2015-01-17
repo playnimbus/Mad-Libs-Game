@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShooterCharacters:
-  - {fileID: 0}
+  - {fileID: 2118195182}
   - {fileID: 720693597}
   - {fileID: 655973826}
   RoomPrefab: {fileID: 100018, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
