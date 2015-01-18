@@ -4,16 +4,13 @@ using System.Collections;
 public class objectiveController : MonoBehaviour {
     public string currentObjective;
 
-<<<<<<< HEAD
     public float survivalSeconds;
-=======
     /* Key Objective Variables */
     bool keyDropped;
     bool keyPickedUp;
 
     /* Other Variables */
 
->>>>>>> origin/master
 	// Use this for initialization
 	void Start () {
 	
@@ -21,9 +18,7 @@ public class objectiveController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
         survivalRoom();
-=======
         
         //Running the update functoins for the current objectives. 
 	    switch (currentObjective)
@@ -38,12 +33,20 @@ public class objectiveController : MonoBehaviour {
                     break;
                 }
         }
->>>>>>> origin/master
 	}
 
     void survivalRoom()
     {
-        survivalSeconds -= Time.deltaTime;
+        if (currentObjective == "Survival")
+        {
+            survivalSeconds -= Time.deltaTime;
+
+            if (survivalSeconds == 0)
+            {
+                //GG MATE.
+                survivalSeconds += 30;
+            }
+        }
     }
 
     void OnGUI()
@@ -111,5 +114,5 @@ public class objectiveController : MonoBehaviour {
     {
 
     }
-
+    /*Survival Objective */
 }
