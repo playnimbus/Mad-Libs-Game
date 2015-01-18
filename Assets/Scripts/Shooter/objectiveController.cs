@@ -76,6 +76,11 @@ public class objectiveController : MonoBehaviour {
     void objectiveKeyUpdate()
     {
         
+        if (keyPickedUp)
+        {
+            //Open Door Code
+        }
+
     }
     void objectiveKeyEnd()
     {
