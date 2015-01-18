@@ -3,8 +3,7 @@ using System.Collections;
 
 public class objectiveController : MonoBehaviour {
     public string currentObjective;
-    public float survivalSeconds;
-    
+
     /* Key Objective Variables */
     bool keyDropped;
     bool keyPickedUp;
@@ -13,6 +12,9 @@ public class objectiveController : MonoBehaviour {
     int totalEnemiesNeeded;
 
     GameObject TheKey;
+    /* Survival Objective Variables */
+    public float survivalSeconds;
+    public bool isSurvivalObjective;
 
     /* Other Variables */
 
@@ -24,7 +26,6 @@ public class objectiveController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        survivalRoom();
         
         //Running the update functoins for the current objectives. 
 	    switch (currentObjective)
@@ -36,34 +37,26 @@ public class objectiveController : MonoBehaviour {
                 }
             case "Survival" :
                 {
+                    objectiveSurvivalUpdate();
                     break;
                 }
         }
 	}
 
-    void survivalRoom()
+    void OnGUI()
     {
-        if (currentObjective == "Survival")
+        if (isSurvivalObjective)
         {
-            survivalSeconds -= Time.deltaTime;
-
-            if (survivalSeconds == 0)
+            if (survivalSeconds < 10)
             {
                 //GG MATE. //lol hi jacob//
                 survivalSeconds += 30;
+                GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:0" + (int)survivalSeconds + "");
             }
-        }
-    }
-
-    void OnGUI()
-    {
-        if (survivalSeconds <= 9)
-        {
-            GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:0" + (int)survivalSeconds + "");
-        }
-        else
-        {
-            GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:" + (int)survivalSeconds + "");
+            else
+            {
+                GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:" + (int)survivalSeconds + "");
+            }
         }
     }
 
@@ -82,6 +75,7 @@ public class objectiveController : MonoBehaviour {
                 }
             case "Survival" :
                 {
+                    objectiveSurvivalEnd();
                     break;
                 }
         }
@@ -97,6 +91,7 @@ public class objectiveController : MonoBehaviour {
                 }
             case "Survival":
                 {
+                    objectiveSurvivalStart();
                     break;
                 }
         }
@@ -114,7 +109,6 @@ public class objectiveController : MonoBehaviour {
         {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
-
     }
     void objectiveDropKey(GameObject enemyObject)
     {
@@ -131,5 +125,24 @@ public class objectiveController : MonoBehaviour {
     {
 
     }
+
     /*Survival Objective */
+    void objectiveSurvivalStart()
+    {
+        isSurvivalObjective = true;
+    }
+    void objectiveSurvivalUpdate()
+    {
+        survivalSeconds -= Time.deltaTime;
+        
+        if (survivalSeconds <= 0)
+        {
+            GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
+            survivalSeconds = 0;
+        }
+    }
+    void objectiveSurvivalEnd()
+    {
+        isSurvivalObjective = false;
+    }
 }
