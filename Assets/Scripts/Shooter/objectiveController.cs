@@ -21,7 +21,7 @@ public class objectiveController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	    
+
 	}
 	
 	// Update is called once per frame
@@ -45,18 +45,26 @@ public class objectiveController : MonoBehaviour {
 
     void OnGUI()
     {
-        if (isSurvivalObjective)
+        switch (currentObjective)
         {
-            if (survivalSeconds < 10)
-            {
-                //GG MATE. //lol hi jacob//
-                survivalSeconds += 30;
-                GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:0" + (int)survivalSeconds + "");
-            }
-            else
-            {
-                GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:" + (int)survivalSeconds + "");
-            }
+            case "FindKey" :
+                //TODO: Do Key GUI Here...
+                break;
+
+            case "Survival" :
+                {
+                    if (survivalSeconds < 10)
+                    {
+                        //GG MATE. //lol hi jacob//
+                        survivalSeconds += 30;
+                        GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:0" + (int)survivalSeconds + "");
+                    }
+                    else
+                    {
+                        GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:" + (int)survivalSeconds + "");
+                    }
+                    break;
+                }
         }
     }
 
@@ -129,7 +137,7 @@ public class objectiveController : MonoBehaviour {
     /*Survival Objective */
     void objectiveSurvivalStart()
     {
-        isSurvivalObjective = true;
+        
     }
     void objectiveSurvivalUpdate()
     {
@@ -143,6 +151,6 @@ public class objectiveController : MonoBehaviour {
     }
     void objectiveSurvivalEnd()
     {
-        isSurvivalObjective = false;
+        
     }
 }
