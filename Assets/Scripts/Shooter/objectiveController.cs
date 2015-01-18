@@ -59,7 +59,7 @@ public class objectiveController : MonoBehaviour {
                 SwitchObjective("FindKey");
                 break;
             case 1:
-                SwitchObjective("Survial");
+                SwitchObjective("Survival");
                 break;
         }
     }
@@ -119,6 +119,7 @@ public class objectiveController : MonoBehaviour {
             case "Survival":
                 {
                     objectiveSurvivalStart();
+                    Debug.Log("Survival Started");
                     break;
                 }
         }
@@ -182,6 +183,6 @@ public class objectiveController : MonoBehaviour {
     }
     void objectiveSurvivalEnd()
     {
-        
+        survivalSeconds = 30;
     }
 }

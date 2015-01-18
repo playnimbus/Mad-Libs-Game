@@ -160,7 +160,7 @@ public class sceneManager : MonoBehaviour {
         GameObject.Destroy(oldRoom);
 
         iTween.MoveBy(newRoom.GetComponent<RoomObjectHolder>().Door, new Vector3(5.5f, 0, 0), 1f);
-
+        gameObject.GetComponent<objectiveController>().RandomObjective(); //changes the current objective to a random one...
         oldRoom = null;
         newRoom = null;
     }
