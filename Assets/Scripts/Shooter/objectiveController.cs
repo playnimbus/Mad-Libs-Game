@@ -3,17 +3,23 @@ using System.Collections;
 
 public class objectiveController : MonoBehaviour {
     public string currentObjective;
-
     public float survivalSeconds;
+    
     /* Key Objective Variables */
     bool keyDropped;
     bool keyPickedUp;
 
+    int enemiesKilled;
+    int totalEnemiesNeeded;
+
+    GameObject TheKey;
+
     /* Other Variables */
+
 
 	// Use this for initialization
 	void Start () {
-	
+	    
 	}
 	
 	// Update is called once per frame
@@ -43,7 +49,7 @@ public class objectiveController : MonoBehaviour {
 
             if (survivalSeconds == 0)
             {
-                //GG MATE.
+                //GG MATE. //lol hi jacob//
                 survivalSeconds += 30;
             }
         }
@@ -99,16 +105,27 @@ public class objectiveController : MonoBehaviour {
     /*Key Objective */
     void objectiveKeyStart()
     {
-
+        keyPickedUp = false;
+        keyDropped = false;
     }
     void objectiveKeyUpdate()
     {
-        
         if (keyPickedUp)
         {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
 
+    }
+    void objectiveDropKey(GameObject enemyObject)
+    {
+        if (enemiesKilled >= totalEnemiesNeeded)
+        {
+            GameObject key = (GameObject)Instantiate(TheKey, new Vector3(enemyObject.transform.position.x,
+            enemyObject.transform.position.y,
+            enemyObject.transform.position.z),
+            new Quaternion(0f, 0f, 0f, 0f));
+        }
+        
     }
     void objectiveKeyEnd()
     {
