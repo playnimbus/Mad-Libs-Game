@@ -9,7 +9,8 @@ public class objectiveController : MonoBehaviour {
     bool keyPickedUp;
 
     int enemiesKilled;
-    public int totalEnemiesNeeded;
+    int totalEnemiesNeeded;
+    public int startingTotalEnemiesNeeded = 10;
 
     public GameObject TheKey;
 
@@ -129,7 +130,7 @@ public class objectiveController : MonoBehaviour {
         keyPickedUp = false;
         keyDropped = false;
         enemiesKilled = 0;
-        totalEnemiesNeeded = 10;
+        totalEnemiesNeeded = startingTotalEnemiesNeeded;
     }
     void objectiveKeyUpdate()
     {
