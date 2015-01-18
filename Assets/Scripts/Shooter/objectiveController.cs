@@ -31,10 +31,7 @@ public class objectiveController : MonoBehaviour {
         //Running the update functoins for the current objectives. 
 	    switch (currentObjective)
         {
-            case null :
-                RandomObjective();
-                break;
-            case "" :
+            case "" : //Usually on start there won't be an objective, or if there just happens to be an empty objective for some reason, it'll find a new one. 
                 RandomObjective();
                 break;
             case "FindKey" :
@@ -136,7 +133,7 @@ public class objectiveController : MonoBehaviour {
     }
     void objectiveKeyUpdate()
     {
-        if (keyPickedUp || keyDropped && currentObjective == "FindKey")
+        if (keyPickedUp || keyDropped && currentObjective == "FindKey") //JustMakinSure that that its on the right objective. Also, right now debugs on keyDrop and not pickup.
         {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
@@ -166,7 +163,7 @@ public class objectiveController : MonoBehaviour {
         keyPickedUp = false;
     }
 
-    /*Survival Objective */
+    /* Survival Objective */
     void objectiveSurvivalStart()
     {
         
