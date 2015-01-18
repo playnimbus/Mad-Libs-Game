@@ -31,6 +31,7 @@ public class bulletScript : MonoBehaviour {
         }
         if (coll.gameObject.tag == "Player" && hurtPlayer)
         {
+            coll.gameObject.GetComponent<PlayerController>().TakeDamage(1);
             GameObject.Destroy(gameObject);
         }
     }

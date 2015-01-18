@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour {
     public float bulletSpeed;
     public float fireRate;
 
+    public float maxHealth = 10f;
+    float totalHealth;
+    public float weaponDamage;
+
     public GameObject bullet;
     public GameObject playerWeapon;
     public GameObject weaponSprite;
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         scene = GameObject.Find("SceneManager").GetComponent<sceneManager>();
         checkInputType();
+        totalHealth = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -36,6 +41,11 @@ public class PlayerController : MonoBehaviour {
             case sceneManager.GameStates.switchingRoom: switchingRoomUpdate(); break;
         }
 	}
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(Screen.width / 2, 100, 60, 60), "Health: " + totalHealth + " <3's ");
+    }
 
     void menuUpdate()
     {
@@ -169,5 +179,16 @@ public class PlayerController : MonoBehaviour {
     
         newBullet.GetComponent<bulletScript>().setVelocity(velocity);
         GameObject.Destroy(newBullet, 3);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        totalHealth -= damage;
+        if (totalHealth <= 0)
+        {
+            //Declare the player dead... 6:22PM I'm Calling It! 
+            GameObject.Destroy(gameObject);
+            //TODO: We need a game over state to be called here. Mike? 
+        }
     }
 }

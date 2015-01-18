@@ -23,7 +23,7 @@ public class enemyController : MonoBehaviour {
         sceneManager = GameObject.Find("SceneManager");
         player = GameObject.FindGameObjectWithTag("Player");
         defineEnemyTypes(); //Defines the enemies and their statistics. Look into finding a way to make this to be done outside of this script.
-        setEnemy(0); //Setting Enemies to ranged for now. Need to set this from the data sent from the drawing app. 
+        setEnemy(Random.Range(1,2)); //Setting Enemies to ranged for now. Need to set this from the data sent from the drawing app. 
 	}
 	
 	// Update is called once per frame
@@ -99,13 +99,16 @@ public class enemyController : MonoBehaviour {
     void Melee()
     {
         meleeTimer++;
-        if (meleeTimer > 100)
+        if (meleeTimer > 50)
         {
             player.SendMessage("TakeDamage", 1);
             meleeTimer = 0;
         }
     }
+    void OnCollisionEnter2D (Collision2D col)
+    {
 
+    }
     void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player")
