@@ -13,6 +13,7 @@ public class enemyController : MonoBehaviour {
     public string attackType = "Ranged";
 
     GameObject player;
+    GameObject sceneManager;
     public GameObject bullet;
 
     int shootTimer = 0;
@@ -125,6 +126,8 @@ public class enemyController : MonoBehaviour {
         health -= damage;
         if (health <= 0)
         {
+            sceneManager.GetComponent<objectiveController>().objectiveAddEnemiesKilled(1);
+            sceneManager.GetComponent<objectiveController>().objectiveDropKey(gameObject);
             GameObject.Destroy(gameObject);
         }
     }

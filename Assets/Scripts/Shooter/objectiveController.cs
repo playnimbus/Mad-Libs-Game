@@ -12,6 +12,7 @@ public class objectiveController : MonoBehaviour {
     int totalEnemiesNeeded;
 
     GameObject TheKey;
+
     /* Survival Objective Variables */
     public float survivalSeconds;
     public bool isSurvivalObjective;
@@ -118,17 +119,23 @@ public class objectiveController : MonoBehaviour {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
     }
-    void objectiveDropKey(GameObject enemyObject)
+    
+    public void objectiveDropKey(GameObject enemyObject) //Can Be Called From Any Object That May Want To Drop Key
     {
-        if (enemiesKilled >= totalEnemiesNeeded)
+        if (enemiesKilled >= totalEnemiesNeeded && currentObjective == "FindKey")
         {
             GameObject key = (GameObject)Instantiate(TheKey, new Vector3(enemyObject.transform.position.x,
             enemyObject.transform.position.y,
             enemyObject.transform.position.z),
             new Quaternion(0f, 0f, 0f, 0f));
-        }
-        
+        } 
     }
+
+    public void objectiveAddEnemiesKilled(int amount)
+    {
+        enemiesKilled += amount;
+    }
+
     void objectiveKeyEnd()
     {
 
