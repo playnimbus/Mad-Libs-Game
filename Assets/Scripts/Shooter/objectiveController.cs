@@ -9,9 +9,9 @@ public class objectiveController : MonoBehaviour {
     bool keyPickedUp;
 
     int enemiesKilled;
-    int totalEnemiesNeeded;
+    public int totalEnemiesNeeded;
 
-    GameObject TheKey;
+    public GameObject TheKey;
 
     /* Survival Objective Variables */
     public float survivalSeconds;
@@ -133,7 +133,7 @@ public class objectiveController : MonoBehaviour {
     }
     void objectiveKeyUpdate()
     {
-        if (keyPickedUp || keyDropped && currentObjective == "FindKey") //JustMakinSure that that its on the right objective. Also, right now debugs on keyDrop and not pickup.
+        if (keyPickedUp && currentObjective == "FindKey") //JustMakinSure that that its on the right objective. Also, right now debugs on keyDrop and not pickup.
         {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
@@ -141,7 +141,7 @@ public class objectiveController : MonoBehaviour {
     
     public void objectiveDropKey(GameObject enemyObject) //Can Be Called From Any Object That May Want To Drop Key
     {
-        if (enemiesKilled >= totalEnemiesNeeded && currentObjective == "FindKey")
+        if (enemiesKilled >= totalEnemiesNeeded && !keyDropped && currentObjective == "FindKey")
         {
             GameObject key = (GameObject)Instantiate(TheKey, new Vector3(enemyObject.transform.position.x,
             enemyObject.transform.position.y,
@@ -149,6 +149,11 @@ public class objectiveController : MonoBehaviour {
             new Quaternion(0f, 0f, 0f, 0f));
             keyDropped = true;
         } 
+    }
+    
+    public void objectiveKeyPickup(bool keyState)
+    {
+        keyPickedUp = keyState;
     }
 
     public void objectiveAddEnemiesKilled(int amount)

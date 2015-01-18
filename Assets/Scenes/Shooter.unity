@@ -1323,6 +1323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObjective: 
+  totalEnemiesNeeded: 1
+  TheKey: {fileID: 100000, guid: 04cda0fe46ffd064bb1dfbfebd0d801a, type: 2}
   survivalSeconds: 30
   isSurvivalObjective: 0
 --- !u!1 &1188285242
