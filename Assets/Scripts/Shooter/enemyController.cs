@@ -20,7 +20,7 @@ public class enemyController : MonoBehaviour {
     int meleeTimer = 0;
 	// Use this for initialization
 	void Start () {
-        
+        sceneManager = GameObject.Find("SceneManager");
         player = GameObject.FindGameObjectWithTag("Player");
         defineEnemyTypes(); //Defines the enemies and their statistics. Look into finding a way to make this to be done outside of this script.
         setEnemy(0); //Setting Enemies to ranged for now. Need to set this from the data sent from the drawing app. 

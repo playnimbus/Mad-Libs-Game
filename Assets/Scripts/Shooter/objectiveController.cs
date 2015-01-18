@@ -22,15 +22,21 @@ public class objectiveController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        Random.seed = (int)System.DateTime.Now.ToBinary(); //Seeding the random number generator so we don't always have the same random number calls.
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
+
         //Running the update functoins for the current objectives. 
 	    switch (currentObjective)
         {
+            case null :
+                RandomObjective();
+                break;
+            case "" :
+                RandomObjective();
+                break;
             case "FindKey" :
                 {
                     objectiveKeyUpdate();
@@ -44,6 +50,20 @@ public class objectiveController : MonoBehaviour {
         }
 	}
 
+    public void RandomObjective()
+    {
+        int randomObjective = Random.Range(0, 2); //This needs to be updated for each objective. TODO: Mike, figure a better way to do this whole thing.
+        switch (randomObjective)
+        {
+            case 0:
+                SwitchObjective("FindKey");
+                break;
+            case 1:
+                SwitchObjective("Survial");
+                break;
+        }
+    }
+
     void OnGUI()
     {
         switch (currentObjective)
@@ -56,8 +76,6 @@ public class objectiveController : MonoBehaviour {
                 {
                     if (survivalSeconds < 10)
                     {
-                        //GG MATE. //lol hi jacob//
-                        survivalSeconds += 30;
                         GUI.Label(new Rect(Screen.width / 2, Screen.width / 2, 60, 60), "0:0" + (int)survivalSeconds + "");
                     }
                     else
@@ -88,7 +106,7 @@ public class objectiveController : MonoBehaviour {
                     break;
                 }
         }
-        
+        Debug.Log("Previous Objective: " + previousObjective);
         //Switching over to the new objectives and calling their start functions. 
         currentObjective = objective;
         switch (currentObjective)
@@ -104,6 +122,7 @@ public class objectiveController : MonoBehaviour {
                     break;
                 }
         }
+        Debug.Log("Current Objective: " + currentObjective);
     }
 
     /*Key Objective */
@@ -111,10 +130,12 @@ public class objectiveController : MonoBehaviour {
     {
         keyPickedUp = false;
         keyDropped = false;
+        enemiesKilled = 0;
+        totalEnemiesNeeded = 10;
     }
     void objectiveKeyUpdate()
     {
-        if (keyPickedUp)
+        if (keyPickedUp || keyDropped && currentObjective == "FindKey")
         {
             GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
@@ -128,6 +149,7 @@ public class objectiveController : MonoBehaviour {
             enemyObject.transform.position.y,
             enemyObject.transform.position.z),
             new Quaternion(0f, 0f, 0f, 0f));
+            keyDropped = true;
         } 
     }
 
@@ -138,7 +160,9 @@ public class objectiveController : MonoBehaviour {
 
     void objectiveKeyEnd()
     {
-
+        enemiesKilled = 0;
+        keyDropped = false;
+        keyPickedUp = false;
     }
 
     /*Survival Objective */
