@@ -103,7 +103,7 @@ public class objectiveController : MonoBehaviour {
         
         if (keyPickedUp)
         {
-            //Open Door Code
+            GameObject.Find("ExitDoor").SendMessage("UnlockDoor");
         }
 
     }
