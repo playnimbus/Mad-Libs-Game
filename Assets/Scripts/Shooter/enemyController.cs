@@ -18,6 +18,8 @@ public class enemyController : MonoBehaviour {
 
     int shootTimer = 0;
     int meleeTimer = 0;
+
+    int hello;
 	// Use this for initialization
 	void Start () {
         sceneManager = GameObject.Find("SceneManager");
