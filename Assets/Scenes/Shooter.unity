@@ -238,7 +238,7 @@ GameObject:
   - 61: {fileID: 125442000}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,7 +309,7 @@ GameObject:
   - 61: {fileID: 194978545}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,7 +381,7 @@ GameObject:
   - 114: {fileID: 283460366}
   m_Layer: 0
   m_Name: ExitDoor
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -537,6 +537,38 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100016, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100026, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54ada062ad7f76241a6295e02844f2a3, type: 2}
   m_RootGameObject: {fileID: 1136000132}
@@ -555,7 +587,7 @@ GameObject:
   - 61: {fileID: 598109921}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -915,7 +947,7 @@ GameObject:
   - 61: {fileID: 768542956}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -986,7 +1018,7 @@ GameObject:
   - 61: {fileID: 997362496}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1323,7 +1355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObjective: 
-  totalEnemiesNeeded: 1
+  startingTotalEnemiesNeeded: 3
   TheKey: {fileID: 100000, guid: 04cda0fe46ffd064bb1dfbfebd0d801a, type: 2}
   survivalSeconds: 30
   isSurvivalObjective: 0
@@ -1650,7 +1682,7 @@ GameObject:
   - 61: {fileID: 1818308605}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1764,7 +1796,7 @@ GameObject:
   - 61: {fileID: 1958131544}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2149,6 +2181,8 @@ MonoBehaviour:
   mousetrackingSpeed: 15
   bulletSpeed: 15
   fireRate: .25
+  maxHealth: 10
+  weaponDamage: 0
   bullet: {fileID: 100000, guid: c0567686b1431674fa619db0b60a6fd3, type: 2}
   playerWeapon: {fileID: 1361083332}
   weaponSprite: {fileID: 1985642579}
