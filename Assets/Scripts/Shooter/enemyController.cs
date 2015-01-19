@@ -93,7 +93,7 @@ public class enemyController : MonoBehaviour {
         newBullet.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
         newBullet.transform.LookAt(player.transform);
         newBullet.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        newBullet.GetComponent<bulletScript>().setVelocity(movementDirection * 5);
+        newBullet.GetComponent<bulletScript>().setVelocity(movementDirection * 2.5F);
     }
 
     void Melee()
