@@ -34,6 +34,10 @@ public class bulletScript : MonoBehaviour {
             coll.gameObject.GetComponent<PlayerController>().TakeDamage(1);
             GameObject.Destroy(gameObject);
         }
+        if (coll.gameObject.tag == "Wall")
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 
     
